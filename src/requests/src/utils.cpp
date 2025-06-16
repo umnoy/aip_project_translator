@@ -1,3 +1,11 @@
+/**
+ * @file utils.cpp
+ * @brief Реализация утилит для работы с конфигурацией
+ * 
+ * @details Файл содержит реализацию функций для работы с конфигурационными
+ * файлами и API-ключами сервисов перевода.
+ */
+
 #include "../include/utils.hpp"
 #include <fstream>
 #include <sstream>
@@ -11,6 +19,24 @@
 namespace json = boost::json;
 namespace sys = boost::system;
 
+/**
+ * @brief Загрузка API-ключей из JSON-файла конфигурации
+ * 
+ * @details Функция читает и парсит JSON-файл конфигурации, извлекая API-ключи
+ * для различных сервисов перевода.
+ * 
+ * @param filepath Путь к файлу конфигурации
+ * 
+ * @return Структура ApiKeys с загруженными ключами
+ * 
+ * @throws std::runtime_error в случаях:
+ *   - Файл не может быть открыт
+ *   - Ошибка парсинга JSON
+ *   - Ошибка извлечения данных из JSON
+ * 
+ * @note При отсутствии некоторых ключей в конфигурации
+ * выводится предупреждение, но функция продолжает работу
+ */
 ApiKeys load_api_keys_from_file(const std::string& filepath) {
     ApiKeys keys;
     std::ifstream file(filepath);

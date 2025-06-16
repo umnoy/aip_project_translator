@@ -1,3 +1,11 @@
+/**
+ * @file http_client.cpp
+ * @brief Реализация HTTP-клиента
+ * 
+ * @details Файл содержит реализацию методов класса HttpClient
+ * для выполнения HTTP и HTTPS запросов.
+ */
+
 #include "../include/http_client.hpp"
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
@@ -7,7 +15,29 @@
 #include <iostream>
 #include <stdexcept>
 
-
+/**
+ * @brief Реализация метода отправки HTTP/HTTPS запроса
+ * 
+ * @details Метод выполняет HTTP или HTTPS запрос в зависимости от порта.
+ * Для HTTPS (порт 443) используется SSL/TLS соединение.
+ * 
+ * @param host Хост или IP-адрес сервера
+ * @param port Порт (80 для HTTP, 443 для HTTPS)
+ * @param target Путь запроса
+ * @param method HTTP-метод
+ * @param body Тело запроса
+ * @param headers HTTP-заголовки
+ * 
+ * @return Тело ответа от сервера
+ * 
+ * @throws std::runtime_error при ошибках:
+ *   - DNS-резолвинга
+ *   - TCP-соединения
+ *   - SSL-рукопожатия (для HTTPS)
+ *   - Отправки запроса
+ *   - Чтения ответа
+ *   - Некорректного статуса ответа
+ */
 std::string HttpClient::SendRequest(
     const std::string& host,
     const std::string& port,
