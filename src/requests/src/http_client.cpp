@@ -7,7 +7,6 @@
 #include <iostream>
 #include <stdexcept>
 
-
 std::string HttpClient::SendRequest(
     const std::string& host,
     const std::string& port,

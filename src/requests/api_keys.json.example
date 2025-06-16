@@ -1,13 +1,13 @@
 {
-          "yandex_translate": {
-            "api_key": "ТВОЙ_КЛЮЧ_ЯНДЕКСА"
-          },
-          "azure_translator": {
-            "subscription_key": "ТВОЙ_КЛЮЧ_AZURE",
-            "region": "ТВОЙ_РЕГИОН_AZURE"
-          },
-          "third_translator": {
-            "api_key": "ТВОЙ_ТРЕТИЙ_КЛЮЧ",
-            "some_other_param": "значение"
-          }
-        }
+  "yandex_translate": {
+    "api_key": "ВАШ_КЛЮЧ_ЯНДЕКСА"
+  },
+
+  "libretranslate": {
+    "api_key": "" 
+  },
+
+  "deepl": {
+    "api_key": "ВАШ_КЛЮЧ_DEEPL"
+  }
+}
