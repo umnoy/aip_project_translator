@@ -1,0 +1,59 @@
+\doxysection{mainwindow.\+h}
+\hypertarget{mainwindow_8h_source}{}\label{mainwindow_8h_source}\index{/Users/mihailmedvedev/Desktop/PROJ\_4MODULE/last\_git\_proj/aip\_project\_translator/src/gui/mainwindow.h@{/Users/mihailmedvedev/Desktop/PROJ\_4MODULE/last\_git\_proj/aip\_project\_translator/src/gui/mainwindow.h}}
+\mbox{\hyperlink{mainwindow_8h}{См. документацию.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ MAINWINDOW\_H}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ MAINWINDOW\_H}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <QStringList>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QRegularExpression>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <QComboBox>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <QPlainTextEdit>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <QTextBrowser>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00014}00014\ \textcolor{preprocessor}{\#ifndef\ BUILD\_GUI\_ONLY}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}translator.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}online\_translators.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}tokenizer.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00020}00020\ QT\_BEGIN\_NAMESPACE}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00021}00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceUi}{Ui}}\ \{\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classUi_1_1MainWindow}{MainWindow}};\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00022}00022\ QT\_END\_NAMESPACE}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00032}\mbox{\hyperlink{classMainWindow}{00032}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00033}00033\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00034}00034\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00036}00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00042}00042\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}{\string~MainWindow}}();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00047}00047\ \ \ \ \ QString\ \mbox{\hyperlink{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}{detectLanguage}}(\textcolor{keyword}{const}\ QString\ \&text);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMainWindow_a64a20a053d777494eddffd80d45c8660}{validateInput}}(\textcolor{keyword}{const}\ QString\ \&text,\ \textcolor{keyword}{const}\ QString\ \&language);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00050}00050\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMainWindow_a027d33fdb87a46985ae4aea57cd0246c}{translateText}}();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00058}00058\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMainWindow_a86b8e9bcad7772fc5a9194999757b0af}{clearFields}}();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00066}00066\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00067}\mbox{\hyperlink{classMainWindow_a35466a70ed47252a0191168126a352a5}{00067}}\ \ \ \ \ \mbox{\hyperlink{classUi_1_1MainWindow}{Ui::MainWindow}}\ *\mbox{\hyperlink{classMainWindow_a35466a70ed47252a0191168126a352a5}{ui}};\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00068}00068\ \textcolor{preprocessor}{\#ifndef\ BUILD\_GUI\_ONLY}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00069}\mbox{\hyperlink{classMainWindow_a178a632097ff489b9831ca189592c0c3}{00069}}\ \ \ \ \ Tokenizer\ \mbox{\hyperlink{classMainWindow_a178a632097ff489b9831ca189592c0c3}{tokenizer}};\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00070}\mbox{\hyperlink{classMainWindow_a79e6d7603ca43fedb2d2bb1889e75c5f}{00070}}\ \ \ \ \ Translator*\ \mbox{\hyperlink{classMainWindow_a79e6d7603ca43fedb2d2bb1889e75c5f}{translator}};\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00071}\mbox{\hyperlink{classMainWindow_a8671ccd168479b16276fe60b5c9cb3d8}{00071}}\ \ \ \ \ OnlineTranslatorsManager*\ \mbox{\hyperlink{classMainWindow_a8671ccd168479b16276fe60b5c9cb3d8}{translatorManager\_}};\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00072}00072\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00079}\mbox{\hyperlink{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}{00079}}\ \ \ \ \ QString\ \mbox{\hyperlink{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}{detectLanguage}}(\textcolor{keyword}{const}\ QString\ \&text);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00080}00080\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00087}\mbox{\hyperlink{classMainWindow_a64a20a053d777494eddffd80d45c8660}{00087}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMainWindow_a64a20a053d777494eddffd80d45c8660}{validateInput}}(\textcolor{keyword}{const}\ QString\ \&text,\ \textcolor{keyword}{const}\ QString\ \&language);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00088}00088\ \};}
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8h_source_l00090}00090\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAINWINDOW\_H}}
+
+\end{DoxyCode}

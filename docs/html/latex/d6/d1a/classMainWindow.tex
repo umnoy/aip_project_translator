@@ -1,0 +1,310 @@
+\doxysection{Класс Main\+Window}
+\hypertarget{classMainWindow}{}\label{classMainWindow}\index{MainWindow@{MainWindow}}
+
+
+Главное окно приложения переводчика  
+
+
+
+
+{\ttfamily \#include $<$mainwindow.\+h$>$}
+
+Граф наследования\+:Main\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d6/d1a/classMainWindow}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Конструктор главного окна \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window}} ()
+\begin{DoxyCompactList}\small\item\em Деструктор \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}{detect\+Language}} (const QString \&text)
+\item 
+bool \mbox{\hyperlink{classMainWindow_a64a20a053d777494eddffd80d45c8660}{validate\+Input}} (const QString \&text, const QString \&language)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Закрытые слоты}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classMainWindow_a027d33fdb87a46985ae4aea57cd0246c}{translate\+Text}} ()
+\begin{DoxyCompactList}\small\item\em Слот для перевода текста \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_a86b8e9bcad7772fc5a9194999757b0af}{clear\+Fields}} ()
+\begin{DoxyCompactList}\small\item\em Слот для очистки полей ввода/вывода \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Закрытые члены}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}{detect\+Language}} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Определяет язык введенного текста \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMainWindow_a64a20a053d777494eddffd80d45c8660}{validate\+Input}} (const QString \&text, const QString \&language)
+\begin{DoxyCompactList}\small\item\em Проверяет корректность входных данных \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Закрытые данные}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUi_1_1MainWindow}{Ui\+::\+Main\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a35466a70ed47252a0191168126a352a5}{ui}}
+\begin{DoxyCompactList}\small\item\em Указатель на UI формы \end{DoxyCompactList}\item 
+Tokenizer \mbox{\hyperlink{classMainWindow_a178a632097ff489b9831ca189592c0c3}{tokenizer}}
+\begin{DoxyCompactList}\small\item\em Токенизатор для обработки текста \end{DoxyCompactList}\item 
+Translator \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a79e6d7603ca43fedb2d2bb1889e75c5f}{translator}}
+\begin{DoxyCompactList}\small\item\em Указатель на локальный переводчик \end{DoxyCompactList}\item 
+Online\+Translators\+Manager \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a8671ccd168479b16276fe60b5c9cb3d8}{translator\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Менеджер онлайн-\/переводчиков \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Главное окно приложения переводчика 
+
+Класс \doxylink{classMainWindow}{Main\+Window} представляет собой основное окно приложения, содержащее все элементы интерфейса для перевода текста. Поддерживает как локальный перевод через ONNX Runtime, так и онлайн-\/перевод через различные сервисы. 
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}} строка \mbox{\hyperlink{mainwindow_8h_source_l00032}{32}}
+
+
+
+\label{doc-constructors}
+\Hypertarget{classMainWindow_doc-constructors}
+\doxysubsection{Конструктор(ы)}
+\Hypertarget{classMainWindow_a996c5a2b6f77944776856f08ec30858d}\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily \label{classMainWindow_a996c5a2b6f77944776856f08ec30858d} 
+Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Конструктор главного окна 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em parent} & Родительский виджет \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{8}}
+
+
+
+Перекрестные ссылки \mbox{\hyperlink{c__project__autogen_2moc__predefs_8h_source_l00001}{BUILD\+\_\+\+GUI\+\_\+\+ONLY}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00154}{clear\+Fields()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8h_source_l00069}{tokenizer}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}}, \mbox{\hyperlink{mainwindow_8h_source_l00070}{translator}}, \mbox{\hyperlink{mainwindow_8h_source_l00071}{translator\+Manager\+\_\+}} и \mbox{\hyperlink{mainwindow_8h_source_l00067}{ui}}.
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}\index{MainWindow@{MainWindow}!````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}}
+\index{````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MainWindow()}{\string~MainWindow()}}
+{\footnotesize\ttfamily \label{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7} 
+Main\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Main\+Window (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Деструктор 
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00043}{43}}
+
+
+
+Перекрестные ссылки \mbox{\hyperlink{mainwindow_8h_source_l00070}{translator}}, \mbox{\hyperlink{mainwindow_8h_source_l00071}{translator\+Manager\+\_\+}} и \mbox{\hyperlink{mainwindow_8h_source_l00067}{ui}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classMainWindow_doc-func-members}
+\doxysubsection{Методы}
+\Hypertarget{classMainWindow_a86b8e9bcad7772fc5a9194999757b0af}\index{MainWindow@{MainWindow}!clearFields@{clearFields}}
+\index{clearFields@{clearFields}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{clearFields}{clearFields}}
+{\footnotesize\ttfamily \label{classMainWindow_a86b8e9bcad7772fc5a9194999757b0af} 
+void Main\+Window\+::clear\+Fields (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Слот для очистки полей ввода/вывода 
+
+Очищает все поля ввода и вывода, сбрасывает выбор языков. 
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00154}{154}}
+
+
+
+Перекрестные ссылки \mbox{\hyperlink{mainwindow_8h_source_l00067}{ui}}.
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}\index{MainWindow@{MainWindow}!detectLanguage@{detectLanguage}}
+\index{detectLanguage@{detectLanguage}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{detectLanguage()}{detectLanguage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMainWindow_a440b283f7d5d9bb9678573f363b9d195} 
+QString Main\+Window\+::detect\+Language (\begin{DoxyParamCaption}\item[{const QString \&}]{text}{}\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00162}{162}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow__test_8cpp_source_l00015}{TEST\+\_\+\+SUITE()}} и \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}}.
+
+\Hypertarget{classMainWindow_a440b283f7d5d9bb9678573f363b9d195}\index{MainWindow@{MainWindow}!detectLanguage@{detectLanguage}}
+\index{detectLanguage@{detectLanguage}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{detectLanguage()}{detectLanguage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMainWindow_a440b283f7d5d9bb9678573f363b9d195} 
+QString Main\+Window\+::detect\+Language (\begin{DoxyParamCaption}\item[{const QString \&}]{text}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Определяет язык введенного текста 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em text} & Текст для определения языка \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Строка с названием языка ("{}Русский"{}, "{}Английский"{} или "{}Неизвестный"{}) 
+\end{DoxyReturn}
+\Hypertarget{classMainWindow_a027d33fdb87a46985ae4aea57cd0246c}\index{MainWindow@{MainWindow}!translateText@{translateText}}
+\index{translateText@{translateText}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{translateText}{translateText}}
+{\footnotesize\ttfamily \label{classMainWindow_a027d33fdb87a46985ae4aea57cd0246c} 
+void Main\+Window\+::translate\+Text (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+Слот для перевода текста 
+
+Обрабатывает нажатие кнопки "{}Перевести"{}. Выполняет перевод текста с использованием выбранных переводчиков. 
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{52}}
+
+
+
+Перекрестные ссылки \mbox{\hyperlink{mainwindow_8cpp_source_l00162}{detect\+Language()}}, \mbox{\hyperlink{mainwindow_8h_source_l00069}{tokenizer}}, \mbox{\hyperlink{mainwindow_8h_source_l00070}{translator}}, \mbox{\hyperlink{mainwindow_8h_source_l00071}{translator\+Manager\+\_\+}} и \mbox{\hyperlink{mainwindow_8h_source_l00067}{ui}}.
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a64a20a053d777494eddffd80d45c8660}\index{MainWindow@{MainWindow}!validateInput@{validateInput}}
+\index{validateInput@{validateInput}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{validateInput()}{validateInput()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMainWindow_a64a20a053d777494eddffd80d45c8660} 
+bool Main\+Window\+::validate\+Input (\begin{DoxyParamCaption}\item[{const QString \&}]{text}{, }\item[{const QString \&}]{language}{}\end{DoxyParamCaption})}
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}} строка \mbox{\hyperlink{mainwindow_8cpp_source_l00188}{188}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow__test_8cpp_source_l00015}{TEST\+\_\+\+SUITE()}}.
+
+\Hypertarget{classMainWindow_a64a20a053d777494eddffd80d45c8660}\index{MainWindow@{MainWindow}!validateInput@{validateInput}}
+\index{validateInput@{validateInput}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{validateInput()}{validateInput()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMainWindow_a64a20a053d777494eddffd80d45c8660} 
+bool Main\+Window\+::validate\+Input (\begin{DoxyParamCaption}\item[{const QString \&}]{text}{, }\item[{const QString \&}]{language}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Проверяет корректность входных данных 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em text} & Текст для проверки \\
+\hline
+{\em language} & Язык для проверки \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true если данные корректны, false в противном случае 
+\end{DoxyReturn}
+
+
+\label{doc-variable-members}
+\Hypertarget{classMainWindow_doc-variable-members}
+\doxysubsection{Данные класса}
+\Hypertarget{classMainWindow_a178a632097ff489b9831ca189592c0c3}\index{MainWindow@{MainWindow}!tokenizer@{tokenizer}}
+\index{tokenizer@{tokenizer}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{tokenizer}{tokenizer}}
+{\footnotesize\ttfamily \label{classMainWindow_a178a632097ff489b9831ca189592c0c3} 
+Tokenizer Main\+Window\+::tokenizer\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Токенизатор для обработки текста 
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}} строка \mbox{\hyperlink{mainwindow_8h_source_l00069}{69}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}} и \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}}.
+
+\Hypertarget{classMainWindow_a79e6d7603ca43fedb2d2bb1889e75c5f}\index{MainWindow@{MainWindow}!translator@{translator}}
+\index{translator@{translator}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{translator}{translator}}
+{\footnotesize\ttfamily \label{classMainWindow_a79e6d7603ca43fedb2d2bb1889e75c5f} 
+Translator\texorpdfstring{$\ast$}{*} Main\+Window\+::translator\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Указатель на локальный переводчик 
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}} строка \mbox{\hyperlink{mainwindow_8h_source_l00070}{70}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}} и \mbox{\hyperlink{mainwindow_8cpp_source_l00043}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a8671ccd168479b16276fe60b5c9cb3d8}\index{MainWindow@{MainWindow}!translatorManager\_@{translatorManager\_}}
+\index{translatorManager\_@{translatorManager\_}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{translatorManager\_}{translatorManager\_}}
+{\footnotesize\ttfamily \label{classMainWindow_a8671ccd168479b16276fe60b5c9cb3d8} 
+Online\+Translators\+Manager\texorpdfstring{$\ast$}{*} Main\+Window\+::translator\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Менеджер онлайн-\/переводчиков 
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}} строка \mbox{\hyperlink{mainwindow_8h_source_l00071}{71}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}} и \mbox{\hyperlink{mainwindow_8cpp_source_l00043}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a35466a70ed47252a0191168126a352a5}\index{MainWindow@{MainWindow}!ui@{ui}}
+\index{ui@{ui}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily \label{classMainWindow_a35466a70ed47252a0191168126a352a5} 
+\mbox{\hyperlink{classUi_1_1MainWindow}{Ui\+::\+Main\+Window}}\texorpdfstring{$\ast$}{*} Main\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Указатель на UI формы 
+
+
+
+См. определение в файле \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}} строка \mbox{\hyperlink{mainwindow_8h_source_l00067}{67}}
+
+
+
+Используется в \mbox{\hyperlink{mainwindow_8cpp_source_l00154}{clear\+Fields()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00008}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{translate\+Text()}} и \mbox{\hyperlink{mainwindow_8cpp_source_l00043}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window()}}.
+
+
+
+Объявления и описания членов классов находятся в файлах\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/mihailmedvedev/\+Desktop/\+PROJ\+\_\+4\+MODULE/last\+\_\+git\+\_\+proj/aip\+\_\+project\+\_\+translator/src/gui/\mbox{\hyperlink{mainwindow_8h}{mainwindow.\+h}}\item 
+/\+Users/mihailmedvedev/\+Desktop/\+PROJ\+\_\+4\+MODULE/last\+\_\+git\+\_\+proj/aip\+\_\+project\+\_\+translator/src/gui/\mbox{\hyperlink{mainwindow_8cpp}{mainwindow.\+cpp}}\end{DoxyCompactItemize}

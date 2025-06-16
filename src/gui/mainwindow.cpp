@@ -11,15 +11,14 @@ MainWindow::MainWindow(QWidget *parent)
 #ifndef BUILD_GUI_ONLY
     , tokenizer("/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/vocab.json")
     , translatorManager_(new OnlineTranslatorsManager("/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/requests/api_keys.json"))
+    , translator(nullptr)
 #endif
 {
     ui->setupUi(this);
 
-    // Ограничение выбора языков: Русский, Английский
-    ui->sourceLangCombo->clear();
-    ui->sourceLangCombo->addItems({"Автоопределение", "Русский", "Английский"});
-    ui->targetLangCombo->clear();
-    ui->targetLangCombo->addItems({"Русский", "Английский"});
+    // Настройка интерфейса
+    ui->inputTextEdit->setPlaceholderText("Введите текст для перевода...");
+    ui->outputTextBrowser->setReadOnly(true);
 
     // Подключение сигналов
     connect(ui->translateButton, &QPushButton::clicked, this, &MainWindow::translateText);
@@ -55,7 +54,7 @@ void MainWindow::translateText()
     QString inputText = ui->inputTextEdit->toPlainText().trimmed();
     inputText = inputText.replace("\n", " ").simplified();
     QString sourceLang = ui->sourceLangCombo->currentText();
-    QString targetLang = ui->targetLangCombo->currentText();
+    QString targetLang = ui->targetLangCombo->currentText(); // Исправлено: sourceLangCombo -> targetLangCombo
 
     qDebug() << "Input text:" << inputText << "Source lang:" << sourceLang << "Target lang:" << targetLang;
 
@@ -82,9 +81,11 @@ void MainWindow::translateText()
     }
 
     ui->outputTextBrowser->clear();
+    ui->variantsList->clear(); // Очистка списка вариантов
 
 #ifdef BUILD_GUI_ONLY
     ui->outputTextBrowser->setPlainText("Translation functionality is disabled in GUI-only mode");
+    ui->variantsList->addItem("Translation functionality is disabled in GUI-only mode");
     return;
 #else
     // Локальный перевод
@@ -109,6 +110,7 @@ void MainWindow::translateText()
         if (translator) {
             QString neuralTranslation = QString::fromStdString(translator->run(inputText.toStdString()));
             ui->outputTextBrowser->append("[Локальный] " + neuralTranslation);
+            ui->variantsList->addItem("[Локальный] " + neuralTranslation); // Добавление в variantsList
         } else {
             QMessageBox::critical(this, "Error", "Переводчик не инициализирован");
         }
@@ -134,6 +136,7 @@ void MainWindow::translateText()
                 if (result.success) {
                     QString translatedText = QString::fromStdString(result.translated_text);
                     ui->outputTextBrowser->append("[" + translatorName + "] " + translatedText);
+                    ui->variantsList->addItem("[" + translatorName + "] " + translatedText); // Добавление в variantsList
                 } else {
                     QString errorMessage = QString::fromStdString(result.error_message);
                     qDebug() << translatorName << "translation error:" << errorMessage;
@@ -152,38 +155,37 @@ void MainWindow::clearFields()
 {
     ui->inputTextEdit->clear();
     ui->outputTextBrowser->clear();
+    ui->variantsList->clear(); // Очистка списка вариантов
     ui->sourceLangCombo->setCurrentIndex(0);
 }
 
 QString MainWindow::detectLanguage(const QString &text)
 {
-    QRegularExpression cyrillic("^[\\p{Cyrillic}\\s\\p{Punct}\\d]+$");
-    QRegularExpression latin("^[a-zA-Z\\s\\p{Punct}\\d\\-\\'\\@]+$");
-    cyrillic.setPatternOptions(QRegularExpression::UseUnicodePropertiesOption);
-    latin.setPatternOptions(QRegularExpression::UseUnicodePropertiesOption);
-
-    if (!cyrillic.isValid() || !latin.isValid()) {
-        qDebug() << "Invalid regex in detectLanguage. Cyrillic:" << cyrillic.pattern()
-                 << "Latin:" << latin.pattern();
+    if (text.isEmpty()) {
         return "Неизвестный";
     }
 
-    if (cyrillic.match(text).hasMatch()) return "Русский";
-    if (latin.match(text).hasMatch()) return "Английский";
-    return "Неизвестный";
+    bool hasCyrillic = false;
+    bool hasLatin = false;
+
+    for (const QChar &c : text) {
+        if (c.unicode() >= 0x0400 && c.unicode() <= 0x04FF) { // Кириллица
+            hasCyrillic = true;
+        } else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) { // Латиница
+            hasLatin = true;
+        }
+    }
+
+    if (hasCyrillic && !hasLatin) {
+        return "Русский";
+    } else if (hasLatin && !hasCyrillic) {
+        return "Английский";
+    } else {
+        return "Неизвестный";
+    }
 }
 
 bool MainWindow::validateInput(const QString &text, const QString &language)
 {
-    if (text.length() > 500) {
-        QMessageBox::warning(this, "Warning", "Text is too long. Maximum length is 500 characters.");
-        return false;
-    }
-    
-    if (language.isEmpty()) {
-        QMessageBox::warning(this, "Warning", "Please select target language");
-        return false;
-    }
-    
-    return true;
+    return !text.isEmpty() && !language.isEmpty() && text.length() <= 500;
 }

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(c_project VERSION 0.1 LANGUAGES CXX)
 
+enable_testing()
 # Опция для сборки только GUI
 option(BUILD_GUI_ONLY "Build only GUI without ONNX and other dependencies" OFF)
 
@@ -44,7 +45,7 @@ set(Qt5Network_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5Network")
 add_definitions(-DQT_NO_VERSION_TAGGING)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Network Core)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Network Core Test)
 
 if(NOT BUILD_GUI_ONLY)
     find_package(Boost REQUIRED COMPONENTS system json url)
@@ -100,6 +101,7 @@ if(NOT BUILD_GUI_ONLY)
     target_include_directories(c_project PRIVATE
         ${ONNXRUNTIME_INCLUDE_DIR}
         ${Boost_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}
     )
 endif()
 
@@ -163,3 +165,39 @@ install(TARGETS c_project
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+# Добавляем сборку тестов
+set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/doctest/share/cmake/doctest" ${CMAKE_PREFIX_PATH})
+
+# Тесты
+add_executable(gui_tests
+    tests/mainwindow_test.cpp
+    mainwindow.cpp
+)
+
+
+# Подключаем заголовочные файлы для тестов
+target_include_directories(gui_tests PRIVATE
+    ${CMAKE_SOURCE_DIR}
+    /opt/homebrew/opt/doctest/include/doctest
+)
+
+# Линкуем тесты с Qt и doctest
+target_link_libraries(gui_tests PRIVATE
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets
+    Qt5::Test
+)
+
+# Добавляем определение для GUI-only режима в тесты
+if(BUILD_GUI_ONLY)
+    target_compile_definitions(gui_tests PRIVATE BUILD_GUI_ONLY)
+endif()
+
+# Устанавливаем выходные файлы в build директорию
+set_target_properties(c_project gui_tests PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+# Регистрируем исполняемый файл тестов как тест CTest
+add_test(NAME GuiTests COMMAND gui_tests)

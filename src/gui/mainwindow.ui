@@ -85,7 +85,21 @@
      </layout>
     </item>
     <item>
-     <widget class="QListWidget" name="variantsList"/>
+     <widget class="QLabel" name="variantsLabel">
+      <property name="text">
+       <string>Другие варианты перевода:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListWidget" name="variantsList">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumHeight">
+       <number>100</number>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="buttonLayout">
