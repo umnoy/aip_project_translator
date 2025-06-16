@@ -1,11 +1,3 @@
-/**
- * @file online_translators.cpp
- * @brief Реализация менеджера онлайн-переводчиков
- * 
- * @details Файл содержит реализацию методов класса OnlineTranslatorsManager
- * для работы с различными сервисами перевода (Yandex, LibreTranslate, DeepL).
- */
-
 #include "../include/online_translators.hpp"
 #include "../include/utils.hpp"
 #include <iostream>
@@ -25,13 +17,6 @@ namespace http = beast::http;
 namespace net = boost::asio;
 namespace ip = net::ip;
 
-/**
- * @brief Конструктор менеджера переводчиков
- * 
- * @details Загружает API-ключи из файла конфигурации при создании объекта
- * 
- * @param config_filepath Путь к файлу конфигурации
- */
 OnlineTranslatorsManager::OnlineTranslatorsManager(const std::string& config_filepath) {
     std::cout << "DEBUG: Inside OnlineTranslatorsManager constructor, before load_api_keys_from_file" << std::endl;
     api_keys_ = load_api_keys_from_file(config_filepath);
@@ -39,18 +24,6 @@ OnlineTranslatorsManager::OnlineTranslatorsManager(const std::string& config_fil
     std::cout << "DEBUG: Inside OnlineTranslatorsManager constructor, after load_api_keys_from_file and message" << std::endl;
 }
 
-/**
- * @brief Получение переводов от всех доступных сервисов
- * 
- * @details Последовательно отправляет запросы к каждому сервису перевода
- * (Yandex.Cloud, LibreTranslate, DeepL) и собирает результаты
- * 
- * @param text Текст для перевода
- * @param source_lang Исходный язык
- * @param target_lang Целевой язык
- * 
- * @return Вектор результатов перевода от каждого сервиса
- */
 std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
     const std::string& text,
     const std::string& source_lang,
@@ -59,7 +32,6 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
     std::vector<TranslationResult> results;
     std::cout << "DEBUG: Entering GetTranslations" << std::endl;
 
-    // Яндекс
     try {
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> yandex_request_data =
             PrepareYandexRequest(text, source_lang, target_lang);
@@ -82,14 +54,13 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
         results.push_back(TranslationResult("Yandex.Cloud", "", false, e.what()));
     }
 
-  // LibreTranslate
     try {
         std::cout << "DEBUG: Before PrepareLibreTranslateRequest" << std::endl;
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> libretranslate_request_data =
             PrepareLibreTranslateRequest(text, source_lang, target_lang);
         std::cout << "DEBUG: After PrepareLibreTranslateRequest" << std::endl;
 
-        std::string libretranslate_api_url = "172.20.10.2:5000"; // Актуальный IP для LibreTranslate
+        std::string libretranslate_api_url = "172.20.10.2:5000";
         std::string libretranslate_target = "/translate";
 
         std::cout << "DEBUG: Before GetTranslationFromOne (LibreTranslate)" << std::endl;
@@ -108,7 +79,6 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
         results.push_back(TranslationResult("LibreTranslate", "", false, e.what()));
     }
 
-    // DeepL
     try {
         std::cout << "DEBUG: Before PrepareDeepLRequest" << std::endl;
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> deepl_request_data =
@@ -138,20 +108,6 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
     return results;
 }
 
-/**
- * @brief Получение перевода от одного сервиса
- * 
- * @details Выполняет HTTP-запрос к указанному сервису и обрабатывает ответ
- * 
- * @param translator_name Название сервиса перевода
- * @param url URL сервиса
- * @param target Путь запроса
- * @param method HTTP-метод
- * @param request_body Тело запроса
- * @param headers HTTP-заголовки
- * 
- * @return Результат перевода
- */
 TranslationResult OnlineTranslatorsManager::GetTranslationFromOne(
     const std::string& translator_name,
     const std::string& url,
@@ -241,17 +197,6 @@ TranslationResult OnlineTranslatorsManager::GetTranslationFromOne(
     return TranslationResult(translator_name, translated_text, success, error_message);
 }
 
-/**
- * @brief Подготовка запроса к Яндекс.Переводчику
- * 
- * @details Формирует JSON-тело запроса и заголовки для API Яндекс.Переводчика
- * 
- * @param text Текст для перевода
- * @param source_lang Исходный язык
- * @param target_lang Целевой язык
- * 
- * @return Пара из тела запроса и заголовков
- */
 std::pair<std::string, std::vector<std::pair<std::string, std::string>>>
 OnlineTranslatorsManager::PrepareYandexRequest(const std::string& text, const std::string& source_lang, const std::string& target_lang)
 {
@@ -272,15 +217,6 @@ OnlineTranslatorsManager::PrepareYandexRequest(const std::string& text, const st
     return {request_body, headers};
 }
 
-/**
- * @brief Разбор ответа от Яндекс.Переводчика
- * 
- * @details Парсит JSON-ответ от API и извлекает переведенный текст
- * 
- * @param response_body Тело ответа от API
- * 
- * @return Переведенный текст или сообщение об ошибке
- */
 std::string OnlineTranslatorsManager::ParseYandexResponse(const std::string& response_body)
 {
     try {
@@ -334,17 +270,6 @@ std::string OnlineTranslatorsManager::ParseYandexResponse(const std::string& res
     }
 }
 
-/**
- * @brief Подготовка запроса к LibreTranslate
- * 
- * @details Формирует JSON-тело запроса и заголовки для API LibreTranslate
- * 
- * @param text Текст для перевода
- * @param source_lang Исходный язык
- * @param target_lang Целевой язык
- * 
- * @return Пара из тела запроса и заголовков
- */
 std::pair<std::string, std::vector<std::pair<std::string, std::string>>>
 OnlineTranslatorsManager::PrepareLibreTranslateRequest(const std::string& text, const std::string& source_lang, const std::string& target_lang)
 {
@@ -366,15 +291,6 @@ OnlineTranslatorsManager::PrepareLibreTranslateRequest(const std::string& text, 
     return {request_body, headers};
 }
 
-/**
- * @brief Разбор ответа от LibreTranslate
- * 
- * @details Парсит JSON-ответ от API и извлекает переведенный текст
- * 
- * @param response_body Тело ответа от API
- * 
- * @return Переведенный текст или сообщение об ошибке
- */
 std::string OnlineTranslatorsManager::ParseLibreTranslateResponse(const std::string& response_body)
 {
     try {
@@ -409,17 +325,6 @@ std::string OnlineTranslatorsManager::ParseLibreTranslateResponse(const std::str
     }
 }
 
-/**
- * @brief Подготовка запроса к DeepL
- * 
- * @details Формирует JSON-тело запроса и заголовки для API DeepL
- * 
- * @param text Текст для перевода
- * @param source_lang Исходный язык
- * @param target_lang Целевой язык
- * 
- * @return Пара из тела запроса и заголовков
- */
 std::pair<std::string, std::vector<std::pair<std::string, std::string>>>
 OnlineTranslatorsManager::PrepareDeepLRequest(const std::string& text, const std::string& source_lang, const std::string& target_lang)
 {
@@ -445,15 +350,6 @@ OnlineTranslatorsManager::PrepareDeepLRequest(const std::string& text, const std
     return {request_body, headers};
 }
 
-/**
- * @brief Разбор ответа от DeepL
- * 
- * @details Парсит JSON-ответ от API и извлекает переведенный текст
- * 
- * @param response_body Тело ответа от API
- * 
- * @return Переведенный текст или сообщение об ошибке
- */
 std::string OnlineTranslatorsManager::ParseDeepLResponse(const std::string& response_body)
 {
     try {
