@@ -1,5 +1,5 @@
 #include "../tokenizer/tokenizer.hpp"
-#include "translator.hpp"
+#include "traslator.hpp"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -175,6 +175,6 @@ std::vector<std::pair<int64_t, float>> Translator::top_k(const std::vector<float
     return topk;
 }
 
-std::string Translator::decode_ids(const vector<int64_t> &ids) {
+std::string Translator::decode_ids(const std::vector<int64_t> &ids) {
     return tokenizer.decode(ids);
 }
