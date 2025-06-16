@@ -2,11 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPropertyAnimation>
+#include <QString>
 #include <QStringList>
-#include "../core/src/tokenizer/tokenizer.hpp"
-#include "../core/src/translator/traslator.hpp"
-#include "../requests/include/online_translators.hpp"
+#include <QRegularExpression>
+#include <QDebug>
+
+#ifndef BUILD_GUI_ONLY
+#include "translator.hpp"
+#include "online_translators.hpp"
+#include "tokenizer.hpp"
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,19 +28,15 @@ public:
 private slots:
     void translateText();
     void clearFields();
-    void toggleHistoryPanel();
 
 private:
     Ui::MainWindow *ui;
-    Translator *translator;
-    OnlineTranslatorsManager *translatorManager_;
-    QPropertyAnimation *panelAnimation;
-    bool isPanelVisible;
-    QStringList translationHistory;
+#ifndef BUILD_GUI_ONLY
     Tokenizer tokenizer;
+    Translator* translator;
+    OnlineTranslatorsManager* translatorManager_;
+#endif
 
-    void resizeEvent(QResizeEvent *event) override;
-    void updatePanelPosition();
     QString detectLanguage(const QString &text);
     bool validateInput(const QString &text, const QString &language);
 };

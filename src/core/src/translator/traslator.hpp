@@ -5,7 +5,8 @@
 #define _In_opt_
 #define _Frees_ptr_opt_
 #define _Check_return_
-#define _Success_(expr)
+#undef _Success_  // Отменяем предыдущее определение
+#define _Success_(expr)  // Переопределяем макрос
 #define _Ret_maybenull_
 #define _Null_terminated_
 #define _Outptr_opt_result_maybenull_
