@@ -1,54 +1,47 @@
-cmake_minimum_required(VERSION 3.10)
-project(TranslationTests)
+# CMakeLists.txt для сборки тестов в src/core/tests/
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION 3.16)
+project(TranslationTests CXX)
 
+# Установка директории сборки
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/../build)
 
-find_package(doctest REQUIRED)
-if(NOT doctest_FOUND)
-    message(FATAL_ERROR "doctest not found. Please install doctest or provide its path.")
+# Включение тестов
+option(BUILD_TESTS "Build tests" ON)
+
+if(BUILD_TESTS)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+    # Исходные файлы тестов
+    set(TEST_SOURCES
+        test_tokenizer.cpp
+        test_translator.cpp
+    )
+
+    # Исполняемый файл для тестов
+    add_executable(translation_tests ${TEST_SOURCES})
+
+    # Исходные файлы проекта
+    target_sources(translation_tests PRIVATE
+        ../src/tokenizer/tokenizer.cpp
+        ../src/translator/translator.cpp
+    )
+
+    # Заголовочные файлы
+    target_include_directories(translation_tests PRIVATE
+        ../src/tokenizer
+        ../src/translator
+        ${ONNXRUNTIME_INCLUDE_DIR}
+    )
+
+    # Линковка библиотек
+    target_link_libraries(translation_tests PRIVATE
+        doctest::doctest
+        nlohmann_json::nlohmann_json
+        ${ONNXRUNTIME_LIBRARY}
+    )
+
+    # Регистрация тестов
+    add_test(NAME TranslationTests COMMAND translation_tests)
 endif()
-
-
-find_package(nlohmann_json REQUIRED)
-if(NOT nlohmann_json_FOUND)
-    message(FATAL_ERROR "nlohmann_json not found. Please install nlohmann_json.")
-endif()
-
-
-find_library(ONNXRUNTIME_LIBRARY onnxruntime)
-if(NOT ONNXRUNTIME_LIBRARY)
-    message(FATAL_ERROR "ONNX Runtime library not found. Please install ONNX Runtime.")
-endif()
-
-
-set(TEST_SOURCES
-    tests_tokenizer.cpp
-    tests_translator.cpp
-)
-
-
-add_executable(translation_tests ${TEST_SOURCES})
-
-
-target_sources(translation_tests PRIVATE
-    ../tokenizer/tokenizer.cpp
-    ../translator/translator.cpp
-)
-
-
-target_include_directories(translation_tests PRIVATE
-    ../tokenizer
-    ../translator
-)
-
-
-target_link_libraries(translation_tests PRIVATE
-    doctest::doctest
-    nlohmann_json::nlohmann_json
-    ${ONNXRUNTIME_LIBRARY}
-)
-
-
-add_test(NAME TranslationTests COMMAND translation_tests)

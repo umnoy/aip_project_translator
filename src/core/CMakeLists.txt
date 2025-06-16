@@ -1,23 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
-project(translator LANGUAGES CXX)
+project(TranslationCore CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Установка директории сборки
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 
-# Пути к ONNX Runtime
-set(ONNXRUNTIME_LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
-set(ONNXRUNTIME_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
-
-# Проверка существования директорий
-if(NOT EXISTS "${ONNXRUNTIME_INCLUDE_DIR}")
-    message(FATAL_ERROR "ONNX Runtime include directory not found: ${ONNXRUNTIME_INCLUDE_DIR}")
-endif()
-if(NOT EXISTS "${ONNXRUNTIME_LIB_DIR}")
-    message(FATAL_ERROR "ONNX Runtime lib directory not found: ${ONNXRUNTIME_LIB_DIR}")
-endif()
-
-# Подключаем nlohmann/json
+# Включение FetchContent для загрузки зависимостей
 include(FetchContent)
+
+# Загрузка nlohmann_json
 FetchContent_Declare(
     json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
@@ -25,8 +15,31 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(json)
 
-# Подключаем подкаталог src
-add_subdirectory(src)
+# Создание интерфейсной библиотеки для doctest
+add_library(doctest INTERFACE)
+target_include_directories(doctest INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/doctest
+)
 
-# Включаем подробный вывод для диагностики
-set(CMAKE_VERBOSE_MAKEFILE ON)
+# Добавление поддиректории с тестами
+add_subdirectory(tests)
+
+# Основной проект
+set(SOURCES
+    src/tokenizer/tokenizer.cpp
+    src/translator/translator.cpp
+)
+
+# Библиотека
+add_library(translation_core STATIC ${SOURCES})
+
+# Заголовочные файлы
+target_include_directories(translation_core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+# Линковка библиотек
+target_link_libraries(translation_core PUBLIC
+    nlohmann_json::nlohmann_json
+    ${ONNXRUNTIME_LIBRARY}
+)

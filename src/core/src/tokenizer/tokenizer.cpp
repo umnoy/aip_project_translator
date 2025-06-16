@@ -5,26 +5,14 @@
 #include <sstream>
 #include <stdexcept>
 
-
-/**
- * @file tokenizer.cpp
- * @brief Реализация класса Tokenizer для токенизации текста.
- *
- * Этот файл содержит реализацию методов класса Tokenizer, который загружает словарь
- * из JSON-файла, кодирует текст в последовательность идентификаторов токенов и
- * декодирует их обратно в текст. Используется для обработки текста с учетом специального
- * префикса (▁) и специальных токенов (<unk>, <pad>, <s>, </s>).
- */
-
 using json = nlohmann::json;
-using namespace std;
 
-const string Tokenizer::spm_space = "▁";
+const std::string Tokenizer::spm_space = "▁";
 
 Tokenizer::Tokenizer(const std::string &vocab_path) {
-    ifstream file(vocab_path);
+    std::ifstream file(vocab_path);
     if (!file.is_open()) {
-        throw runtime_error("Failed to open vocab file: " + vocab_path);
+        throw std::runtime_error("Failed to open vocab file: " + vocab_path);
     }
 
     json j;
@@ -36,7 +24,7 @@ Tokenizer::Tokenizer(const std::string &vocab_path) {
     }
 }
 
-string Tokenizer::normalize(const string &text) {
+std::string Tokenizer::normalize(const std::string &text) {
     std::string result;
 
     for (char c : text) {
@@ -45,23 +33,21 @@ string Tokenizer::normalize(const string &text) {
     return result;
 }
 
-vector<int64_t> Tokenizer::encode(const string &input_text) {
-    vector<int64_t> tokens;
-    istringstream stream(normalize(input_text));
-    string word;
+std::vector<int64_t> Tokenizer::encode(const std::string &input_text) {
+    std::vector<int64_t> tokens;
+    std::istringstream stream(normalize(input_text));
+    std::string word;
 
-    // Обработка текста по словам
     while (stream >> word) {
-        string current = spm_space + word;
+        std::string current = spm_space + word;
         size_t pos = 0;
 
-        // Поиск самого длинного подходящего токена
         while (pos < current.size()) {
             size_t len = current.size();
             bool found = false;
 
             while (len > 0) {
-                string sub = current.substr(pos, len);
+                std::string sub = current.substr(pos, len);
                 if (token_to_id.count(sub)) {
                     tokens.push_back(token_to_id[sub]);
                     pos += len;
@@ -81,8 +67,8 @@ vector<int64_t> Tokenizer::encode(const string &input_text) {
     return tokens;
 }
 
-string Tokenizer::decode(const vector<int64_t> &token_ids) {
-    string result;
+std::string Tokenizer::decode(const std::vector<int64_t> &token_ids) {
+    std::string result;
 
     for (size_t i = 0; i < token_ids.size(); ++i) {
         int64_t id = token_ids[i];
@@ -90,7 +76,7 @@ string Tokenizer::decode(const vector<int64_t> &token_ids) {
         if (!id_to_token.count(id))
             continue;
 
-        string token = id_to_token[id];
+        std::string token = id_to_token[id];
         if (token == "<pad>" || token == "<s>" || token == "</s>")
             continue;
 
