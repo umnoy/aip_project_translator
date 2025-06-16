@@ -90,13 +90,6 @@
     <item>
      <layout class="QHBoxLayout" name="buttonLayout">
       <item>
-       <widget class="QPushButton" name="toggleHistoryButton">
-        <property name="text">
-         <string>Показать историю</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="translateButton">
         <property name="text">
          <string>Перевести</string>
@@ -113,40 +106,6 @@
      </layout>
     </item>
    </layout>
-   <widget class="QWidget" name="historyPanel">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>250</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>250</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>250</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <layout class="QVBoxLayout" name="historyPanelLayout">
-     <item>
-      <widget class="QLabel" name="historyLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QListWidget" name="historyList"/>
-     </item>
-    </layout>
-   </widget>
   </widget>
  </widget>
  <resources/>

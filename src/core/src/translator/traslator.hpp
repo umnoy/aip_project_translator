@@ -1,4 +1,16 @@
-#pragma once
+// Отключение аннотаций SAL
+#define _SAL_VERSION 20
+#define _Out_
+#define _In_
+#define _In_opt_
+#define _Frees_ptr_opt_
+#define _Check_return_
+#undef _Success_  // Отменяем предыдущее определение
+#define _Success_(expr)  // Переопределяем макрос
+#define _Ret_maybenull_
+#define _Null_terminated_
+#define _Outptr_opt_result_maybenull_
+
 
 #include "../tokenizer/tokenizer.hpp"
 #include <onnxruntime_cxx_api.h>
