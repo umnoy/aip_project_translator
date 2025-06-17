@@ -1,33 +1,36 @@
 cmake_minimum_required(VERSION 3.15)
 project(TranslatorProject LANGUAGES CXX)
 
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_library(ONNXRUNTIME_LIB onnxruntime HINTS /usr/lib /usr/local/lib)
+find_path(ONNXRUNTIME_INCLUDE_DIR onnxruntime_cxx_api.h HINTS /usr/include/onnxruntime /usr/local/include/onnxruntime)
 
-include(FetchContent)
-FetchContent_Declare(
-    doctest
-    GIT_REPOSITORY https://github.com/doctest/doctest.git
-    GIT_TAG v2.4.11
-)
-FetchContent_MakeAvailable(doctest)
+if (NOT ONNXRUNTIME_LIB OR NOT ONNXRUNTIME_INCLUDE_DIR)
+    message(FATAL_ERROR "ONNX Runtime not found. Please install it or specify paths manually.")
+endif()
 
 
 add_library(tokenizer
-    tokenizer/tokenizer.cpp
-    tokenizer/tokenizer.hpp
+    ./src/tokenizer/tokenizer.cpp
+    ./src/tokenizer/tokenizer.hpp
 )
+
+add_library(doctest INTERFACE)
+target_include_directories(doctest INTERFACE libs/doctest)
+
 
 add_library(translator
-    translator/translator.cpp
-    translator/translator.hpp
+    ./src/translator/translator.cpp
+    ./src/translator/traslator.hpp
 )
 
+add_executable(run_tests
+    ./tests/test_main.cpp
+    ./tests/tokenizer_test.cpp
+    ./tests/translator_test.cpp
+)
 
-file(GLOB TEST_SOURCES tests/*.cpp)
-
-add_executable(run_tests ${TEST_SOURCES})
-target_link_libraries(run_tests tokenizer translator doctest::doctest)
+target_link_libraries(run_tests tokenizer translator doctest)
 target_include_directories(run_tests PRIVATE tokenizer translator)
