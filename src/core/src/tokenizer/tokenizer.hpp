@@ -37,11 +37,6 @@ public:
      */
     std::string decode(const std::vector<int64_t> &token_ids);
 
-private:
-    std::unordered_map<std::string, int64_t> token_to_id; ///< Маппинг токенов в их идентификаторы.
-    std::unordered_map<int64_t, std::string> id_to_token; ///< Маппинг идентификаторов в токены.
-    static const std::string spm_space; ///< Специальный префикс для токенов (▁).
-
     /**
      * @brief Нормализует текст, заменяя пробельные символы на одиночные пробелы.
      * @param text Входной текст для нормализации.
@@ -49,4 +44,9 @@ private:
      *
      */
     std::string normalize(const std::string &text);
+
+    std::unordered_map<std::string, int64_t> token_to_id; ///< Маппинг токенов в их идентификаторы.
+    std::unordered_map<int64_t, std::string> id_to_token; ///< Маппинг идентификаторов в токены.
+    static const std::string spm_space; ///< Специальный префикс для токенов
+
 };

@@ -1,12 +1,11 @@
-// Отключение аннотаций SAL
 #define _SAL_VERSION 20
 #define _Out_
 #define _In_
 #define _In_opt_
 #define _Frees_ptr_opt_
 #define _Check_return_
-#undef _Success_  // Отменяем предыдущее определение
-#define _Success_(expr)  // Переопределяем макрос
+#undef _Success_ 
+#define _Success_(expr)
 #define _Ret_maybenull_
 #define _Null_terminated_
 #define _Outptr_opt_result_maybenull_
@@ -72,6 +71,36 @@ public:
      */
     std::string run(const std::string &input);
 
+       /**
+     * @brief Декодирует идентификаторы токенов в текст.
+     * @param ids Вектор идентификаторов токенов.
+     * @return Декодированный текст.
+     *
+     * Пример:
+     *   std::vector<int64_t> ids = {101, 102};
+     *   decode_ids(ids) // возвращает, например, "Hello World"
+     */
+    std::string decode_ids(const std::vector<int64_t> &ids);
+
+    /**
+     * @brief Применяет softmax к логитам для получения вероятностей.
+     * @param logits Вектор логитов.
+     * @return Вектор вероятностей.
+     *
+     * Пример:
+     *   std::vector<float> logits = {0.1, 0.2, 0.7};
+     *   auto probs = softmax(logits); // возвращает нормализованные вероятности
+     */
+    std::vector<float> softmax(const std::vector<float> &logits);
+
+    /**
+     * @brief Выбирает k токенов с наибольшими вероятностями.
+     * @param probs Вектор вероятностей.
+     * @param k Количество выбираемых токенов.
+     * @return Вектор пар {токен, вероятность}, отсортированный по убыванию.
+     */
+    std::vector<std::pair<int64_t, float>> top_k(const std::vector<float> &probs, int k);
+
 private:
     Ort::Env env;                               ///< Окружение ONNX Runtime.
     Ort::Session encoder_session;               ///< Сессия для энкодера ONNX.
@@ -113,37 +142,4 @@ private:
                                   const std::vector<int64_t> &encoder_input_ids,
                                   const std::vector<float> &encoder_hidden_state);
 
-    /**
-     * @brief Декодирует идентификаторы токенов в текст.
-     * @param ids Вектор идентификаторов токенов.
-     * @return Декодированный текст.
-     *
-     * Пример:
-     *   std::vector<int64_t> ids = {101, 102};
-     *   decode_ids(ids) // возвращает, например, "Hello World"
-     */
-    std::string decode_ids(const std::vector<int64_t> &ids);
-
-    /**
-     * @brief Применяет softmax к логитам для получения вероятностей.
-     * @param logits Вектор логитов.
-     * @return Вектор вероятностей.
-     *
-     * Пример:
-     *   std::vector<float> logits = {0.1, 0.2, 0.7};
-     *   auto probs = softmax(logits); // возвращает нормализованные вероятности
-     */
-    std::vector<float> softmax(const std::vector<float> &logits);
-
-    /**
-     * @brief Выбирает k токенов с наибольшими вероятностями.
-     * @param probs Вектор вероятностей.
-     * @param k Количество выбираемых токенов.
-     * @return Вектор пар {токен, вероятность}, отсортированный по убыванию.
-     *
-     * Пример:
-     *   std::vector<float> probs = {0.1, 0.7, 0.2};
-     *   auto top = top_k(probs, 2); // возвращает, например, {{1, 0.7}, {2, 0.2}}
-     */
-    std::vector<std::pair<int64_t, float>> top_k(const std::vector<float> &probs, int k);
 };

@@ -59,12 +59,13 @@ std::string Translator::run(const std::string &input) {
                 new_beams.push(new_beam);
                 if ((int)new_beams.size() > beam_width) {
                     std::priority_queue<Beam> tmp;
-                    while (new_beams.size() > 1) {
+                    while ((int)tmp.size() < beam_width && !new_beams.empty()) {
                         tmp.push(new_beams.top());
                         new_beams.pop();
                     }
-                    new_beams = tmp;
+                    new_beams = std::move(tmp);
                 }
+            }   
             }
         }
 

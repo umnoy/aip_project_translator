@@ -27,14 +27,14 @@ TEST_CASE("Tokenizer encodes known tokens") {
     auto ids = t.encode("hello world");
     REQUIRE(ids.size() == 2);
     REQUIRE(ids[0] == 1);
-    WARN(ids[1] == 2); // soft check
+    WARN(ids[1] == 2);
 }
 
 TEST_CASE("Tokenizer encodes unknown token with <unk>") {
     Tokenizer t(make_vocab_file());
     auto ids = t.encode("foo");
     REQUIRE(ids.size() == 1);
-    CHECK(ids[0] == 0); // <unk>
+    CHECK(ids[0] == 0);
 }
 
 TEST_CASE("Tokenizer decodes tokens to string") {
