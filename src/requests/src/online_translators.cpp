@@ -32,7 +32,6 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
     std::vector<TranslationResult> results;
     std::cout << "DEBUG: Entering GetTranslations" << std::endl;
 
-    // Яндекс
     try {
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> yandex_request_data =
             PrepareYandexRequest(text, source_lang, target_lang);
@@ -55,14 +54,13 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
         results.push_back(TranslationResult("Yandex.Cloud", "", false, e.what()));
     }
 
-  // LibreTranslate
     try {
         std::cout << "DEBUG: Before PrepareLibreTranslateRequest" << std::endl;
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> libretranslate_request_data =
             PrepareLibreTranslateRequest(text, source_lang, target_lang);
         std::cout << "DEBUG: After PrepareLibreTranslateRequest" << std::endl;
 
-        std::string libretranslate_api_url = "172.20.10.2:5000"; // Актуальный IP для LibreTranslate
+        std::string libretranslate_api_url = "172.20.10.2:5000";
         std::string libretranslate_target = "/translate";
 
         std::cout << "DEBUG: Before GetTranslationFromOne (LibreTranslate)" << std::endl;
@@ -81,7 +79,6 @@ std::vector<TranslationResult> OnlineTranslatorsManager::GetTranslations(
         results.push_back(TranslationResult("LibreTranslate", "", false, e.what()));
     }
 
-    // DeepL
     try {
         std::cout << "DEBUG: Before PrepareDeepLRequest" << std::endl;
         std::pair<std::string, std::vector<std::pair<std::string, std::string>>> deepl_request_data =
@@ -331,13 +328,11 @@ std::string OnlineTranslatorsManager::ParseLibreTranslateResponse(const std::str
 std::pair<std::string, std::vector<std::pair<std::string, std::string>>>
 OnlineTranslatorsManager::PrepareDeepLRequest(const std::string& text, const std::string& source_lang, const std::string& target_lang)
 {
-    // DeepL требует массив текстов
     json::value json_body = json::object {
         {"text", json::array{text}},
-        {"target_lang", target_lang} // Код языка в верхнем регистре (RU, EN)
+        {"target_lang", target_lang}
     };
 
-    // Если source_lang не пустой, добавляем его в верхнем регистре
     if (!source_lang.empty()) {
         std::string source_lang_upper = source_lang;
         std::transform(source_lang_upper.begin(), source_lang_upper.end(), source_lang_upper.begin(), ::toupper);
@@ -366,7 +361,6 @@ std::string OnlineTranslatorsManager::ParseDeepLResponse(const std::string& resp
 
         json::object response_obj = jv.as_object();
 
-        // Проверка на ошибки API
         if (response_obj.contains("message")) {
             if (response_obj.at("message").is_string()) {
                 return "DeepL API error: " + std::string(response_obj.at("message").as_string().c_str());
@@ -374,7 +368,6 @@ std::string OnlineTranslatorsManager::ParseDeepLResponse(const std::string& resp
             return "DeepL API error: Unknown error message format.";
         }
 
-        // Проверка наличия translations
         if (!response_obj.contains("translations") || !response_obj.at("translations").is_array()) {
             return "DeepL response parsing error: missing or incorrect format of the 'translations' field.";
         }
@@ -384,7 +377,6 @@ std::string OnlineTranslatorsManager::ParseDeepLResponse(const std::string& resp
             return "DeepL response parsing error: the translations array is empty.";
         }
 
-        // Извлечение текста перевода
         if (translations_array[0].is_object()) {
             json::object translation_obj = translations_array[0].as_object();
             if (translation_obj.contains("text") && translation_obj.at("text").is_string()) {
