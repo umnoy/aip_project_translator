@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 #ifndef BUILD_GUI_ONLY
-    , tokenizer("/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/vocab.json")
-    , translatorManager_(new OnlineTranslatorsManager("/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/requests/api_keys.json"))
+    , tokenizer("../core/opus-mt-en-ru/vocab.json")
+    , translatorManager_(new OnlineTranslatorsManager("../requests/api_keys.json"))
     , translator(nullptr)
 #endif
 {
@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     try {
         translator = new Translator(
             tokenizer,
-            "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/encoder.onnx",
-            "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/decoder.onnx",
+            "../core/opus-mt-en-ru/encoder.onnx",
+            "../core/opus-mt-en-ru/decoder.onnx",
             0,
             2
         );
@@ -83,15 +83,15 @@ void MainWindow::translateText()
         if (sourceLang == "Русский" && targetLang == "Английский") {
             translator = new Translator(
                 tokenizer,
-                "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-ru-en/encoder.onnx",
-                "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-ru-en/decoder.onnx",
+                "../core/opus-mt-ru-en/encoder.onnx",
+                "../core/opus-mt-ru-en/decoder.onnx",
                 62517, 0, 50, 3
             );
         } else if (sourceLang == "Английский" && targetLang == "Русский") {
             translator = new Translator(
                 tokenizer,
-                "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/encoder.onnx",
-                "/Users/mihailmedvedev/Desktop/PROJ_4MODULE/last_git_proj/aip_project_translator/src/core/opus-mt-en-ru/decoder.onnx",
+                "../core/opus-mt-en-ru/encoder.onnx",
+                "../core/opus-mt-en-ru/decoder.onnx",
                 62517, 0, 50, 3
             );
         }
