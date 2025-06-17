@@ -1,4 +1,3 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 #include "../src/tokenizer/tokenizer.hpp"
 
@@ -14,6 +13,12 @@ std::string make_vocab_file(const std::string& name = "vocab_test.json") {
     f << vocab_json;
     return name;
 }
+
+TEST_CASE("Tokenizer incorrectly expects empty encoding for known tokens") {
+    Tokenizer t(make_vocab_file());
+    auto ids = t.encode("hello world");
+    CHECK_FALSE(!ids.empty());
+}    
 
 TEST_CASE("Tokenizer handles normalization") {
     Tokenizer t(make_vocab_file());

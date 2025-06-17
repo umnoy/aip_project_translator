@@ -5,8 +5,6 @@
 #include <sstream>
 #include <stdexcept>
 
-using json = nlohmann::json;
-
 const std::string Tokenizer::spm_space = "▁";
 
 Tokenizer::Tokenizer(const std::string &vocab_path) {
@@ -15,7 +13,7 @@ Tokenizer::Tokenizer(const std::string &vocab_path) {
         throw std::runtime_error("Failed to open vocab file: " + vocab_path);
     }
 
-    json j;
+    nlohmann::json j;
     file >> j;
 
     for (auto &[token, id] : j.items()) {
