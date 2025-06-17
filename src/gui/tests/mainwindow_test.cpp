@@ -4,13 +4,13 @@
 #include <QApplication>
 #include <QtTest/QTest>
 #include <QSignalSpy>
-#include <QComboBox>         // Для QComboBox
-#include <QPlainTextEdit>    // Для QPlainTextEdit
-#include <QTextBrowser>      // Для QTextBrowser
-#include <QPushButton>       // Для QPushButton
-#include <QListWidget>       // Для QListWidget
-#include <QMessageBox>       // Для обработки QMessageBox
-#include <QTimer>            // Для QTimer::singleShot
+#include <QComboBox>
+#include <QPlainTextEdit>
+#include <QTextBrowser>
+#include <QPushButton>
+#include <QListWidget>
+#include <QMessageBox>
+#include <QTimer>
 
 TEST_SUITE("MainWindow Tests") {
     TEST_CASE("Initialization") {
@@ -27,8 +27,8 @@ TEST_SUITE("MainWindow Tests") {
             auto sourceCombo = window.findChild<QComboBox*>("sourceLangCombo");
             auto targetCombo = window.findChild<QComboBox*>("targetLangCombo");
             
-            CHECK(sourceCombo->count() == 3); // Автоопределение, Русский, Английский
-            CHECK(targetCombo->count() == 2); // Русский, Английский
+            CHECK(sourceCombo->count() == 3);
+            CHECK(targetCombo->count() == 2);
             
             CHECK(sourceCombo->itemText(0) == "Автоопределение");
             CHECK(sourceCombo->itemText(1) == "Русский");
@@ -41,7 +41,7 @@ TEST_SUITE("MainWindow Tests") {
         SUBCASE("Text input/output fields initialization") {
             REQUIRE(window.findChild<QPlainTextEdit*>("inputTextEdit") != nullptr);
             REQUIRE(window.findChild<QTextBrowser*>("outputTextBrowser") != nullptr);
-            REQUIRE(window.findChild<QListWidget*>("variantsList") != nullptr); // Проверка variantsList
+            REQUIRE(window.findChild<QListWidget*>("variantsList") != nullptr);
             
             auto inputField = window.findChild<QPlainTextEdit*>("inputTextEdit");
             auto outputField = window.findChild<QTextBrowser*>("outputTextBrowser");
@@ -49,10 +49,10 @@ TEST_SUITE("MainWindow Tests") {
             
             CHECK(inputField->toPlainText().isEmpty());
             CHECK(outputField->toPlainText().isEmpty());
-            CHECK(variantsList->count() == 0); // Проверка, что variantsList пуст
+            CHECK(variantsList->count() == 0);
             CHECK(inputField->placeholderText() == "Введите текст для перевода...");
             CHECK(outputField->isReadOnly());
-            CHECK_FALSE(variantsList->isEnabled()); // Проверка, что variantsList только для чтения
+            CHECK_FALSE(variantsList->isEnabled());
         }
         
         SUBCASE("Buttons initialization") {
@@ -140,18 +140,16 @@ TEST_SUITE("MainWindow Tests") {
             auto variantsList = window.findChild<QListWidget*>("variantsList");
             auto sourceCombo = window.findChild<QComboBox*>("sourceLangCombo");
             
-            // Fill fields
             inputField->setPlainText("Test text");
             outputField->setPlainText("Translated text");
-            variantsList->addItem("Alternative translation"); // Заполнение variantsList
+            variantsList->addItem("Alternative translation");
             sourceCombo->setCurrentIndex(1);
             
-            // Trigger clear
             QTest::mouseClick(window.findChild<QPushButton*>("clearButton"), Qt::LeftButton);
             
             CHECK(inputField->toPlainText().isEmpty());
             CHECK(outputField->toPlainText().isEmpty());
-            CHECK(variantsList->count() == 0); // Проверка очистки variantsList
+            CHECK(variantsList->count() == 0);
             CHECK(sourceCombo->currentIndex() == 0);
         }
     }
@@ -170,12 +168,10 @@ TEST_SUITE("MainWindow Tests") {
             auto sourceCombo = window.findChild<QComboBox*>("sourceLangCombo");
             auto targetCombo = window.findChild<QComboBox*>("targetLangCombo");
             
-            // Set input
             inputField->setPlainText("Hello");
-            sourceCombo->setCurrentIndex(2); // Английский
-            targetCombo->setCurrentIndex(0); // Русский
+            sourceCombo->setCurrentIndex(2);
+            targetCombo->setCurrentIndex(0);
             
-            // Закрыть QMessageBox, если появится
             QTimer::singleShot(100, [&]() {
                 auto msgBox = qApp->activeModalWidget();
                 if (msgBox && msgBox->inherits("QMessageBox")) {
@@ -183,13 +179,11 @@ TEST_SUITE("MainWindow Tests") {
                 }
             });
             
-            // Trigger translation
             QTest::mouseClick(window.findChild<QPushButton*>("translateButton"), Qt::LeftButton);
             
-            // Check output
             CHECK(outputField->toPlainText() == "Translation functionality is disabled in GUI-only mode");
-            CHECK(variantsList->count() == 1); // Проверка, что в variantsList один элемент
-            if (variantsList->count() > 0) { // Защита от SIGSEGV
+            CHECK(variantsList->count() == 1);
+            if (variantsList->count() > 0) {
                 CHECK(variantsList->item(0)->text() == "Translation functionality is disabled in GUI-only mode");
             }
         }

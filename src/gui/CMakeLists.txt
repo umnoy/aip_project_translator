@@ -3,30 +3,23 @@ cmake_minimum_required(VERSION 3.16)
 project(c_project VERSION 0.1 LANGUAGES CXX)
 
 enable_testing()
-# Опция для сборки только GUI
+
 option(BUILD_GUI_ONLY "Build only GUI without ONNX and other dependencies" OFF)
 
-# Добавляем определение для компилятора
 if(BUILD_GUI_ONLY)
-    add_definitions(-DBUILD_GUI_ONLY)
+    add_definitions(-DBUILD_GUI_ONLY) 
 endif()
 
-# Настройки Qt
 set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt@5")
 set(Qt5_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5")
 
-# Включаем поддержку Qt
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC ON) 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-# Отключаем предупреждения о пространствах имен
 set(CMAKE_AUTOMOC_MOC_OPTIONS "-nn")
-
-# Очистка кэша Qt
 set(CMAKE_AUTOMOC_SEARCH_PATHS "")
 
-# Устанавливаем переменные окружения для Qt
 set(ENV{QTDIR} "/opt/homebrew/opt/qt@5")
 set(ENV{PATH} "/opt/homebrew/opt/qt@5/bin:$ENV{PATH}")
 
@@ -35,13 +28,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 cmake_policy(SET CMP0167 OLD)
 
-# Явно указываем пути к компонентам Qt
 set(Qt5Core_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5Core")
 set(Qt5Gui_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5Gui")
 set(Qt5Widgets_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5Widgets")
 set(Qt5Network_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5Network")
 
-# Добавляем флаги компиляции для Qt
 add_definitions(-DQT_NO_VERSION_TAGGING)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
@@ -52,7 +43,6 @@ if(NOT BUILD_GUI_ONLY)
     find_package(OpenSSL REQUIRED)
     find_package(nlohmann_json 3.11.2 REQUIRED)
     
-    # Определяем пути к ONNX Runtime в зависимости от ОС
     if(APPLE)
         set(ONNXRUNTIME_LIB_DIR "${CMAKE_SOURCE_DIR}/../core/lib/macos")
         set(ONNXRUNTIME_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../core/include")
@@ -121,7 +111,6 @@ if(NOT BUILD_GUI_ONLY)
         OpenSSL::Crypto
     )
 
-    # Поиск библиотеки ONNX Runtime с учетом ОС
     if(APPLE)
         find_library(ONNXRUNTIME_LIBRARY
             NAMES onnxruntime libonnxruntime
@@ -143,13 +132,12 @@ if(NOT BUILD_GUI_ONLY)
     target_link_libraries(c_project PRIVATE ${ONNXRUNTIME_LIBRARY})
 endif()
 
-# Настройка свойств для разных ОС
 if(WIN32)
     set_target_properties(c_project PROPERTIES
         WIN32_EXECUTABLE TRUE
     )
 elseif(APPLE)
-    set_target_properties(c_project PROPERTIES
+    set_target_properties(c_project PROPERTIES 
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.c_project"
         MACOSX_BUNDLE_BUNDLE_NAME "c_project"
@@ -159,45 +147,37 @@ elseif(APPLE)
 endif()
 
 include(GNUInstallDirs)
-install(TARGETS c_project
+install(TARGETS c_project 
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} 
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} 
 )
 
-# Добавляем сборку тестов
 set(CMAKE_PREFIX_PATH "/opt/homebrew/opt/doctest/share/cmake/doctest" ${CMAKE_PREFIX_PATH})
 
-# Тесты
 add_executable(gui_tests
     tests/mainwindow_test.cpp
     mainwindow.cpp
 )
 
-
-# Подключаем заголовочные файлы для тестов
-target_include_directories(gui_tests PRIVATE
+target_include_directories(gui_tests PRIVATE 
     ${CMAKE_SOURCE_DIR}
     /opt/homebrew/opt/doctest/include/doctest
 )
 
-# Линкуем тесты с Qt и doctest
-target_link_libraries(gui_tests PRIVATE
+target_link_libraries(gui_tests PRIVATE 
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
     Qt5::Test
 )
 
-# Добавляем определение для GUI-only режима в тесты
 if(BUILD_GUI_ONLY)
     target_compile_definitions(gui_tests PRIVATE BUILD_GUI_ONLY)
 endif()
 
-# Устанавливаем выходные файлы в build директорию
 set_target_properties(c_project gui_tests PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
-# Регистрируем исполняемый файл тестов как тест CTest
-add_test(NAME GuiTests COMMAND gui_tests)
+add_test(NAME GuiTests COMMAND gui_tests) 

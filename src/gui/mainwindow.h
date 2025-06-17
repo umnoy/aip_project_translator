@@ -31,20 +31,33 @@ QT_END_NAMESPACE
  */
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+    Q_OBJECT 
 
 public:
     /**
      * @brief Конструктор главного окна
      * @param parent Родительский виджет
      */
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr); 
     
     /**
      * @brief Деструктор
      */
     ~MainWindow();
+
+    /**
+     * @brief Определяет язык введенного текста
+     * @param text Текст для определения языка
+     * @return Строка с названием языка ("Русский", "Английский" или "Неизвестный")
+     */
     QString detectLanguage(const QString &text);
+    
+    /**
+     * @brief Проверяет корректность входных данных
+     * @param text Текст для проверки
+     * @param language Язык для проверки
+     * @return true если данные корректны, false в противном случае
+     */
     bool validateInput(const QString &text, const QString &language);
 
 private slots:
@@ -64,27 +77,12 @@ private slots:
     void clearFields();
 
 private:
-    Ui::MainWindow *ui; ///< Указатель на UI формы
+    Ui::MainWindow *ui;
 #ifndef BUILD_GUI_ONLY
-    Tokenizer tokenizer; ///< Токенизатор для обработки текста
-    Translator* translator; ///< Указатель на локальный переводчик
-    OnlineTranslatorsManager* translatorManager_; ///< Менеджер онлайн-переводчиков
+    Tokenizer tokenizer; 
+    Translator* translator; 
+    OnlineTranslatorsManager* translatorManager_; 
 #endif
-
-    /**
-     * @brief Определяет язык введенного текста
-     * @param text Текст для определения языка
-     * @return Строка с названием языка ("Русский", "Английский" или "Неизвестный")
-     */
-    QString detectLanguage(const QString &text);
-    
-    /**
-     * @brief Проверяет корректность входных данных
-     * @param text Текст для проверки
-     * @param language Язык для проверки
-     * @return true если данные корректны, false в противном случае
-     */
-    bool validateInput(const QString &text, const QString &language);
 };
 
 #endif // MAINWINDOW_H
